@@ -1,0 +1,25 @@
+.gradle/
+**/build/
+release/
+run/
+hosting/
+*.log
+hs_err_pid*
+
+# Public repository: release metadata only. Source remains in the private repository.
+/alpha-2.md
+/build.gradle.kts
+/settings.gradle.kts
+/gradle.properties
+/gradle/
+/gradlew
+/gradlew.bat
+/docs/
+/login-api/
+/login-config/
+/login-core/
+/login-platform-bukkit/
+/login-platform-bungee/
+/login-platform-paper/
+/login-platform-velocity/
+/login-storage-sql/

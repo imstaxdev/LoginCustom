@@ -34,6 +34,9 @@ Download the latest files from [GitHub Releases](https://github.com/Imstaxdev/Lo
 - Signed proxy-to-backend communication using HMAC-SHA256
 - Timestamp, nonce and replay protection for network messages
 - No persistent auto-login: authentication ends when the player disconnects
+- Versioned account migrations from Alpha 1
+- Offline-capable account administration with `/unregister` and `/unpremium`
+- Network-session revocation after password, Premium or account changes
 
 ## Compatibility
 
@@ -127,6 +130,8 @@ Never expose an offline-mode backend directly to the internet. The signed LoginC
 | `/login <password>` | Authenticate the current session |
 | `/changepassword <current> <new> <confirmation>` | Change the account password |
 | `/unregister <player>` | Remove an account registration |
+| `/premium <current-password>` | Link the account to the verified official UUID of the current connection |
+| `/unpremium <player>` | Disable Premium for a registered online or offline account |
 | `/logincustom reload` | Reload safe configuration and messages |
 | `/logincustom status` | Display plugin and storage status |
 
@@ -139,7 +144,9 @@ Aliases: `/reg`, `/log`, `/cpw` and `/lc`.
 | `logincustom.command.login` | Everyone |
 | `logincustom.command.register` | Everyone |
 | `logincustom.command.changepassword` | Everyone |
+| `logincustom.command.premium` | Everyone |
 | `logincustom.admin.unregister` | Operators |
+| `logincustom.admin.unpremium` | Operators |
 | `logincustom.admin.reload` | Operators |
 | `logincustom.admin.status` | Operators |
 | `logincustom.admin.*` | Operators |
@@ -152,8 +159,25 @@ Aliases: `/reg`, `/log`, `/cpw` and `/lc`.
 - Network sessions fail closed if MariaDB or signed communication becomes unavailable.
 - Full IP addresses are not used as account identifiers.
 - Invalid, expired, duplicated or incorrectly signed network messages are rejected.
+- Password changes, Premium changes and account deletion revoke active network sessions.
 
 Use a dedicated MariaDB user, strong unique credentials and regular database backups.
+
+### Premium identity boundary
+
+LoginCustom only enables `/premium` when the server connection has already been
+cryptographically verified by Minecraft's official authentication flow.
+
+On a Velocity or Bungee network, `/premium <current-password>` schedules a
+one-time verification and disconnects the current offline session. On the next
+connection LoginCustom forces the proxy's native official handshake only for
+that account. If Minecraft's session service confirms the connection,
+LoginCustom stores the official UUID and authenticates the network session. If
+verification fails, the connection is rejected.
+
+The proxy remains in `online-mode=false`, so registered non-Premium players keep
+the normal password flow. LoginCustom never treats a player name, offline UUID
+or public profile lookup as proof of ownership.
 
 ## License
 
