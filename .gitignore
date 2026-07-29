@@ -1,4 +1,5 @@
 .gradle/
+.secrets/
 **/build/
 release/
 run/
@@ -8,6 +9,9 @@ hs_err_pid*
 
 # Public repository: release metadata only. Source remains in the private repository.
 /alpha-2.md
+/alpha-3.md
+/beta-1.md
+/beta.1/
 /build.gradle.kts
 /settings.gradle.kts
 /gradle.properties
@@ -19,7 +23,19 @@ hs_err_pid*
 /login-config/
 /login-core/
 /login-platform-bukkit/
+/login-platform-bukkit-modern/
+/login-platform-bukkit-21/
+/login-platform-bukkit-26/
 /login-platform-bungee/
+/login-platform-bungee-21/
+/login-platform-bungee-26/
 /login-platform-paper/
+/login-platform-paper-modern/
+/login-platform-paper-21/
+/login-platform-paper-26/
+/login-platform-server-21/
+/login-platform-server-26/
 /login-platform-velocity/
+/login-platform-velocity-21/
+/login-platform-velocity-26/
 /login-storage-sql/
