@@ -19,6 +19,8 @@ hs_err_pid*
 /gradlew
 /gradlew.bat
 /docs/
+/downgrade/
+/tools/
 /login-api/
 /login-config/
 /login-core/
