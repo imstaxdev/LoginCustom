@@ -16,8 +16,8 @@ Each release is built for a specific Minecraft generation. Do not mix JARs from 
 | --- | --- | --- | --- |
 | Legacy `1.0.0` | `1.8.8–1.15.2` | Java 8 | `LoginCustom-Paper-Legacy.jar`, `LoginCustom-Bukkit-Legacy.jar` |
 | Downgrade Beta | `1.16.x–1.20.x` | Version-dependent | `LoginCustom-Paper.jar`, `LoginCustom-Bukkit.jar` |
-| Beta 1.21 `1.0.0-beta.1-mc1.21` | `1.21.x` | Java 21 | `LoginCustom-Paper.jar`, `LoginCustom-Bukkit.jar` |
-| Beta 26 `1.0.0-beta.1-mc26` | `26.x` | Java 25 | `LoginCustom-Paper.jar`, `LoginCustom-Bukkit.jar` |
+| Modern Beta 1.21 | `1.21.x` | Java 21 | `LoginCustom-Paper.jar`, `LoginCustom-Bukkit.jar`, `LoginCustom-Folia.jar` |
+| Modern Beta 26 | `26.x` | Java 25 | `LoginCustom-Paper.jar`, `LoginCustom-Bukkit.jar`, `LoginCustom-Folia.jar` |
 
 Proxy networks additionally require `LoginCustom-Velocity.jar` or `LoginCustom-Bungee.jar` from the same release line. Download files from [GitHub Releases](https://github.com/Imstaxdev/LoginCustom/releases).
 
@@ -35,6 +35,9 @@ Proxy networks additionally require `LoginCustom-Velocity.jar` or `LoginCustom-B
 - Offline account administration with `/unregister` and `/unpremium`
 - Selective Premium verification through Minecraft's official login handshake
 - Session revocation after password, Premium or account changes
+- Versioned external password pepper keyring with database identity checks
+- Optional TOTP two-factor authentication with one-use recovery codes
+- Region-aware Folia scheduling through dedicated Folia artifacts
 
 ## Platform compatibility
 
@@ -44,7 +47,9 @@ Proxy networks additionally require `LoginCustom-Velocity.jar` or `LoginCustom-B
 - Java 21 bytecode
 - Paper/Purpur through the Paper JAR
 - CraftBukkit/Spigot through the Bukkit JAR
+- Folia through the dedicated Folia JAR
 - Directly started on Paper `1.21.11`
+- Folia `1.21.11` build 14 validated with registration, login and timeout flows
 - Velocity `3.6.x` through the Java 21 proxy JAR
 
 ### Beta 26
@@ -53,10 +58,12 @@ Proxy networks additionally require `LoginCustom-Velocity.jar` or `LoginCustom-B
 - Java 25 bytecode
 - Paper/Purpur through the Paper JAR
 - CraftBukkit/Spigot through the Bukkit JAR
+- Folia through the dedicated Folia JAR
 - Directly started on Paper `26.2`
+- Folia `26.2` build 1 validated for startup, diagnostics and clean shutdown
 - Velocity `4.1.x` through the Java 25 proxy JAR
 
-The two beta lines are separate on purpose: the 26.x build can use the current Java runtime without reducing its bytecode target for older servers. Folia is not supported by these JARs.
+The two beta lines are separate on purpose: the 26.x build can use the current Java runtime without reducing its bytecode target for older servers. The Downgrade Beta does not currently declare Folia support; use the Folia JAR only with its matching 1.21.x or 26.x line.
 
 ### Proxies
 
@@ -95,7 +102,7 @@ bundling SQLite inside the JAR.
 ```text
 Velocity or BungeeCord
           |
-          +--> Paper/Purpur backend
+          +--> Paper/Purpur/Folia backend
           +--> Bukkit/Spigot backend
 ```
 
@@ -117,10 +124,15 @@ Never expose an offline-mode backend directly to the internet. Signed LoginCusto
 | `/login <password>` | Authenticate the current session |
 | `/changepassword <current> <new> <confirmation>` | Change the password |
 | `/premium <current-password>` | Verify and link the official account |
+| `/2fa <code>` | Complete a login protected by two-factor authentication |
+| `/2fa setup <current-password>` | Start TOTP enrollment |
+| `/2fa confirm <code>` | Confirm TOTP enrollment and create recovery codes |
+| `/2fa disable <current-password> <code>` | Disable TOTP after both factors are verified |
 | `/unregister <player>` | Delete a registered account |
 | `/unpremium <player>` | Disable Premium for a registered account |
 | `/logincustom reload` | Reload safe configuration and messages |
 | `/logincustom status` | Show plugin and storage status |
+| `/logincustom doctor` | Run storage, security and platform scheduler diagnostics |
 
 Aliases: `/reg`, `/log`, `/cpw` and `/lc`.
 
