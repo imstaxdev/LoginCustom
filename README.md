@@ -12,6 +12,41 @@ LoginCustom protects offline-mode servers against username impersonation. Player
 
 Each release is built for a specific Minecraft generation. Do not mix JARs from different release lines.
 
+### Which file should I download?
+
+1. Select your **exact Minecraft version** on Modrinth.
+2. Select the software that actually starts your server.
+3. Download the file offered for that exact combination.
+
+| Your server software | File to install |
+| --- | --- |
+| Paper or Purpur | `LoginCustom-Paper.jar` |
+| Folia | `LoginCustom-Folia.jar` |
+| CraftBukkit or Spigot | `LoginCustom-Bukkit.jar` |
+| Velocity proxy | `LoginCustom-Velocity.jar` |
+| BungeeCord proxy | `LoginCustom-Bungee.jar` |
+
+The Velocity and BungeeCord files do not replace the backend plugin. A proxy
+network needs the proxy JAR **and** the matching Paper, Folia or Bukkit JAR on
+every backend server.
+
+### Why are some Modrinth versions shown in red?
+
+Modrinth filters downloads by the exact combination of Minecraft version and
+loader. A red or unavailable version means LoginCustom does not currently
+publish a file for that exact combination. It does not indicate a problem with
+your Modrinth account or the download page.
+
+The current Folia beta is declared for:
+
+- `1.21.4`, `1.21.5`, `1.21.6`, `1.21.8` and `1.21.11`
+- `26.2`
+
+Other Folia patch versions are not currently claimed as supported. If your
+exact Folia version is unavailable, do not force a different LoginCustom JAR
+and do not install the Paper JAR on Folia. Update the server to a listed Folia
+version, use Paper/Purpur with the Paper JAR, or wait for a matching build.
+
 | Release line | Minecraft | Java | Backend files |
 | --- | --- | --- | --- |
 | Legacy `1.0.0` | `1.8.8–1.15.2` | Java 8 | `LoginCustom-Paper-Legacy.jar`, `LoginCustom-Bukkit-Legacy.jar` |

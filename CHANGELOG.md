@@ -2,6 +2,35 @@
 
 All notable changes to LoginCustom are documented here.
 
+## 1.0.0-beta.5-dev.2
+
+### Added
+
+- Public `LoginCustom-API.jar` for compile-time integrations through Bukkit's
+  `ServicesManager`.
+- Specific authentication lifecycle events for registration, passwords,
+  Premium sessions, two-factor authentication and session invalidation.
+- Configurable authentication reminders using chat, action bar, title or boss
+  bar displays.
+- Click-to-copy controls for private TOTP enrollment secrets and individual
+  recovery codes.
+- Strict configuration validation with the exact invalid YAML path.
+
+### Security
+
+- Prevented raw TOTP enrollment secrets and recovery codes from appearing in
+  visible chat.
+- Added fail-closed protection for Paper/Spigot command logging. Unsafe
+  `commands.log` settings are corrected before credentials can be accepted.
+- Kept credentials, TOTP values, recovery codes, internal account IDs and
+  address fingerprints out of public API snapshots and audit records.
+
+### Supported release lines
+
+- Minecraft `1.21.x` with Java 21.
+- Minecraft `26.x` with Java 25.
+- Dedicated Bukkit, Paper, Folia, Velocity and BungeeCord artifacts.
+
 ## 1.0.0-beta.1-mc1.16-1.20
 
 ### Added
