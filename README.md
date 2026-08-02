@@ -120,6 +120,8 @@ The two beta lines are separate on purpose: the 26.x build can use the current J
 Standalone servers use SQLite by default:
 
 ```yaml
+spawn-login: true
+
 storage:
   type: sqlite
   sqlite:
@@ -163,6 +165,7 @@ Never expose an offline-mode backend directly to the internet. Signed LoginCusto
 | `/2fa setup <current-password>` | Start TOTP enrollment |
 | `/2fa confirm <code>` | Confirm TOTP enrollment and create recovery codes |
 | `/2fa disable <current-password> <code>` | Disable TOTP after both factors are verified |
+| `/setlogin` | Save the location used when players connect before authentication |
 | `/unregister <player>` | Delete a registered account |
 | `/unpremium <player>` | Disable Premium for a registered account |
 | `/logincustom reload` | Reload safe configuration and messages |
@@ -181,6 +184,7 @@ Aliases: `/reg`, `/log`, `/cpw` and `/lc`.
 | `logincustom.command.premium` | Everyone |
 | `logincustom.admin.unregister` | Operators |
 | `logincustom.admin.unpremium` | Operators |
+| `logincustom.admin.setlogin` | Operators |
 | `logincustom.admin.reload` | Operators |
 | `logincustom.admin.status` | Operators |
 | `logincustom.admin.*` | Operators |
@@ -196,6 +200,12 @@ Aliases: `/reg`, `/log`, `/cpw` and `/lc`.
 - Names, offline UUIDs and public profile lookups are never treated as proof of ownership.
 
 Use a dedicated MariaDB user, strong unique credentials and regular backups.
+
+When `spawn-login: true` (the default), backend players are moved to the
+location saved by `/setlogin` as they connect. Until a custom point is saved,
+LoginCustom uses the primary world's spawn. The location is stored separately
+in `plugins/LoginCustom/login-spawn.yml`; setting the option to `false` disables
+the connection teleport without deleting the saved point.
 
 ## License
 
