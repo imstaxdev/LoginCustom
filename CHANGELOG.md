@@ -2,10 +2,19 @@
 
 All notable changes to LoginCustom are documented here.
 
-## 1.0.0-beta.5-dev.2
+## 1.0.0 (upcoming stable release)
 
 ### Added
 
+- Permission-aware tab completion for every command that exposes subcommands.
+- `/logincustom help` and its `/lc help` alias.
+- `/2fa help`, including completion for `setup`, `confirm` and `disable`.
+- Explicit `confirm` completion for destructive account operations while
+  passwords, TOTP values and recovery codes remain excluded from suggestions.
+- Dedicated Folia artifacts for the supported Minecraft `1.21.x` and `26.x`
+  release lines.
+- Configurable login spawn enabled by default through `spawn-login: true`.
+- `/setlogin` for saving the protected pre-authentication location.
 - Public `LoginCustom-API.jar` for compile-time integrations through Bukkit's
   `ServicesManager`.
 - Specific authentication lifecycle events for registration, passwords,
@@ -25,11 +34,31 @@ All notable changes to LoginCustom are documented here.
 - Kept credentials, TOTP values, recovery codes, internal account IDs and
   address fingerprints out of public API snapshots and audit records.
 
+### Changed
+
+- Help and completion output is filtered using the sender's permissions.
+- Login-spawn teleports use platform-owned scheduling. Folia uses entity-aware
+  scheduling and asynchronous teleports.
+- Missing login worlds fall back safely to the primary world spawn.
+- Login spawn persistence uses atomic file replacement when supported.
+- Public documentation, naming, Modrinth description, project icon and gallery
+  were renewed for the stable release.
+
 ### Supported release lines
 
 - Minecraft `1.21.x` with Java 21.
 - Minecraft `26.x` with Java 25.
 - Dedicated Bukkit, Paper, Folia, Velocity and BungeeCord artifacts.
+- Older Minecraft versions, snapshots and versions newer than `26.x` are not
+  included in the supported stable line.
+
+### Validated
+
+- Complete Gradle test suite and modern artifact assembly.
+- Folia startup on `1.21.4`, `1.21.5`, `1.21.6`, `1.21.8`, `1.21.11`,
+  `26.1.2` and `26.2`.
+- SQLite startup without LoginCustom fail-closed errors or Folia ownership
+  violations across the verified matrix.
 
 ## 1.0.0-beta.1-mc1.16-1.20
 
