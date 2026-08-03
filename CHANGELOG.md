@@ -41,8 +41,8 @@ All notable changes to LoginCustom are documented here.
   scheduling and asynchronous teleports.
 - Missing login worlds fall back safely to the primary world spawn.
 - Login spawn persistence uses atomic file replacement when supported.
-- Public documentation, naming, Modrinth description, project icon and gallery
-  were renewed for the stable release.
+- Public documentation, naming, Modrinth description and project icon were
+  renewed. The gallery is reserved exclusively for real in-game screenshots.
 
 ### Supported release lines
 
