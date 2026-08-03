@@ -5,11 +5,13 @@ Secure, modern authentication for offline-mode and mixed-mode Minecraft servers.
 [![GitHub release](https://img.shields.io/github/v/release/Imstaxdev/LoginCustom?include_prereleases&label=latest)](https://github.com/Imstaxdev/LoginCustom/releases)
 [![Modrinth](https://img.shields.io/modrinth/dt/W5LtRXFX?logo=modrinth&label=Modrinth)](https://modrinth.com/plugin/logincustom)
 [![License](https://img.shields.io/badge/license-MIT-2ea44f.svg)](LICENSE)
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.8.8--26.x-62b47a)](https://modrinth.com/plugin/logincustom/versions)
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.x_%7C_26.x-62b47a)](https://modrinth.com/plugin/logincustom/versions)
 
 LoginCustom protects player accounts against username impersonation. Players register once and authenticate whenever they reconnect; until authentication succeeds, movement and sensitive gameplay actions remain locked.
 
 It works on standalone servers and proxy networks, supports verified Premium accounts, and provides dedicated builds for Bukkit, Spigot, Paper, Purpur, Folia, Velocity and BungeeCord.
+
+> **Current support policy:** LoginCustom `1.0.0` targets Minecraft `1.21.x` and `26.x` only. Older downloads remain available as archived builds but are not part of the supported stable line. Snapshots and versions newer than `26.x` are not supported.
 
 ## Highlights
 
@@ -40,16 +42,14 @@ Always choose the file that matches both your Minecraft version and the software
 
 > A proxy JAR does not replace the backend plugin. Velocity and BungeeCord networks require the matching proxy JAR plus the correct Paper, Folia or Bukkit JAR on every backend.
 
-## Version lines
+## Supported stable lines
 
 | Release line | Minecraft | Java | Status |
 | --- | --- | --- | --- |
-| Legacy `1.0.0` | `1.8.8–1.15.2` | Java 8 | Stable legacy release |
-| Downgrade Beta | `1.16.x–1.20.x` | Depends on Minecraft version | Active beta |
-| Modern Beta 1.21 | `1.21.x` | Java 21 | Active beta |
-| Modern Beta 26 | `26.x` | Java 25 | Active beta |
+| LoginCustom `1.0.0` for 1.21 | `1.21.x` | Java 21 | Supported stable line |
+| LoginCustom `1.0.0` for 26 | `26.x` | Java 25 | Supported stable line |
 
-The 1.21.x and 26.x builds are separate so each line can use its native Java and platform capabilities. Never mix JARs from different release lines.
+The 1.21.x and 26.x builds are separate so each line can use its native Java and platform capabilities. Never mix JARs from different release lines. Builds for Minecraft `1.8.8–1.20.x` are archived and receive no stable support.
 
 ### Modern platform support
 
@@ -57,7 +57,7 @@ The 1.21.x and 26.x builds are separate so each line can use its native Java and
 - CraftBukkit and Spigot use `LoginCustom-Bukkit.jar`.
 - Folia uses its dedicated `LoginCustom-Folia.jar`; do not substitute the Paper JAR.
 - Velocity and BungeeCord use their matching proxy artifact and require LoginCustom on every backend.
-- The Downgrade line does not currently declare Folia support.
+- Folia is supported on the official builds for `1.21.4`, `1.21.5`, `1.21.6`, `1.21.8`, `1.21.11`, `26.1.2` and `26.2`.
 
 Modrinth only enables combinations for which a matching artifact is published. If a Minecraft version or loader appears unavailable, select a supported combination rather than forcing a different JAR.
 
@@ -110,17 +110,22 @@ MariaDB is mandatory for proxy deployments. Never expose an offline-mode backend
 | `/changepassword <current> <new> <confirmation>` | Change the account password |
 | `/premium <current-password>` | Verify and link an official Minecraft account |
 | `/2fa <code>` | Complete a two-factor-protected login |
+| `/2fa help` | Show the available two-factor commands |
 | `/2fa setup <current-password>` | Begin TOTP enrollment |
 | `/2fa confirm <code>` | Confirm enrollment and generate recovery codes |
 | `/2fa disable <current-password> <code>` | Disable TOTP after verifying both factors |
 | `/setlogin` | Save the pre-authentication login location |
 | `/unregister <player>` | Delete a registered account, online or offline |
 | `/unpremium <player>` | Remove Premium status, online or offline |
+| `/logincustom help` | Show only the commands available to the sender |
 | `/logincustom reload` | Reload safe configuration and messages |
 | `/logincustom status` | Show runtime and storage status |
 | `/logincustom doctor` | Run storage, security and scheduler diagnostics |
+| `/logincustom reset2fa <player> confirm` | Reset another account's 2FA from the server console |
 
-Aliases: `/reg`, `/log`, `/cpw` and `/lc`.
+Aliases: `/reg`, `/log`, `/cpw` and `/lc`. `/lc help` is equivalent to `/logincustom help`.
+
+Subcommands are tab-completed and filtered by permission. Passwords, TOTP codes and recovery codes are intentionally never suggested.
 
 ## Permissions
 
@@ -137,6 +142,8 @@ Player authentication permissions are available to everyone. Administrative perm
 | `logincustom.admin.setlogin` | Operators |
 | `logincustom.admin.reload` | Operators |
 | `logincustom.admin.status` | Operators |
+| `logincustom.admin.doctor` | Operators |
+| `logincustom.admin.reset2fa` | Operators; command execution is console-only |
 | `logincustom.admin.*` | Operators |
 
 ## Security design
